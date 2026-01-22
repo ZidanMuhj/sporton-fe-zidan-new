@@ -8,6 +8,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"], // <--- WAJIB TAMBAHKAN INI
 });
 
 export const metadata: Metadata = {
@@ -22,8 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}  antialiased`}>
-        <Header/>
+      {/* Tambahkan poppins.className agar font diterapkan ke seluruh teks */}
+      <body className={`${poppins.variable} ${poppins.className} antialiased`}>
+        <Header />
         {children}
         <Footers />
       </body>
