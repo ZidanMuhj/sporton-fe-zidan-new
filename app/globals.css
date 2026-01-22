@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  --dark: #111111;
+  --dark-alternate: #1b1918;
+  --primary: #ff5f3f;
+  --primary-light: #f4ebeb;
+}
+
+@theme inline {
+  --color-dark: var(--dark);
+  --color-dark-alternate: var(--dark-alternate);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --font-poppins: var(--font-poppins);
+}
+
+html{
+  
+}
+*{
+  @apply font-poppins;
+}
+
+/* INPUT GROUP */
+.input-group {
+  @apply mb-5;
+}
+
+.input-group label {
+  @apply text-xs mb-3;
+}
+
+.input-group input,
+.input-group textarea{
+  @apply px-4 py-2.5 bg-gray-100 w-full focus:border focus:border-gray-400 text-sm;
+}
