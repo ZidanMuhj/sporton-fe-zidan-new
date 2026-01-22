@@ -4,13 +4,12 @@ import React, { useState } from "react";
 import CardWithHeader from "../ui/card-with-header";
 import { CustomerInfo } from "@/app/hooks/use-cart-store";
 
-type TOrderInformation ={
-   formData : CustomerInfo;
-   setFormData: React.Dispatch<React.SetStateAction<CustomerInfo>>
-}
+type TOrderInformation = {
+  formData: CustomerInfo;
+  setFormData: React.Dispatch<React.SetStateAction<CustomerInfo>>;
+};
 
-const OrderInformation = ({formData, setFormData}: TOrderInformation) => {
-
+const OrderInformation = ({ formData, setFormData }: TOrderInformation) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -34,7 +33,7 @@ const OrderInformation = ({formData, setFormData}: TOrderInformation) => {
           <label htmlFor="customerContact">Whatsapp Number</label>
           <input
             type="number"
-            placeholder="+62xxx"
+            placeholder="0812xxxxx"
             id="customerContact"
             name="customerContact"
             value={formData.customerContact}
@@ -44,8 +43,7 @@ const OrderInformation = ({formData, setFormData}: TOrderInformation) => {
         <div className="input-group">
           <label htmlFor="customerAddress">Shipping Address</label>
           <textarea
-            placeholder="Example Street, 18, West Jakarta, Indonesia, 66521"
-            id="customerAddress"
+            placeholder="Jl Asem Baris V. Tebet. Jakarta Selatan"
             name="customerAddress"
             value={formData.customerAddress}
             onChange={handleInputChange}
