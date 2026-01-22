@@ -53,9 +53,9 @@ const PaymentSteps = () => {
       formData.append("totalPayment", totalPrice!.toString());
 
       const res = await transactionCheckout(formData);
-      alert('Transaction createx succesfully!')
+      alert("Transaction created succesfully!");
       reset();
-      push(`/order-status/${res._id}`)
+      push(`/order-status/${res._id}`);
     } catch (error) {
       console.log(error);
     }
