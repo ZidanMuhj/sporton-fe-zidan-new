@@ -15,10 +15,11 @@
   --font-poppins: var(--font-poppins);
 }
 
-html{
-  
+html {
+  overflow-x: hidden;
 }
-*{
+
+* {
   @apply font-poppins;
 }
 
@@ -28,10 +29,24 @@ html{
 }
 
 .input-group label {
-  @apply text-xs mb-3;
+  @apply block text-xs mb-1;
 }
 
 .input-group input,
-.input-group textarea{
-  @apply px-4 py-2.5 bg-gray-100 w-full focus:border focus:border-gray-400 text-sm;
+.input-group textarea {
+  @apply px-4 py-2.5 bg-gray-100 w-full focus:border focus:border-gray-400 outline-none text-sm;
+}
+
+/* INPUT GROUP ADMIN */
+
+/* INPUT GROUP */
+
+.input-group-admin label {
+  @apply block text-xs mb-1;
+}
+
+.input-group-admin input,
+.input-group-admin select,
+.input-group-admin textarea {
+  @apply px-4 py-3 w-full border border-[#DBDBDB] rounded-md focus:border-gray-500 outline-none text-sm;
 }
