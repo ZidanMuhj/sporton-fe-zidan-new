@@ -8,29 +8,26 @@ import Button from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCartStore } from "@/app/hooks/use-cart-store";
-import { transactionCheckout } from "@/app/services/transaction-service";
+import { transactionCheckout } from "@/app/services/transaction.service";
 
 const PaymentSteps = () => {
   const { push } = useRouter();
   const { items, customerInfo, reset } = useCartStore();
   const [file, setFile] = useState<File | null>();
 
-  const uploadAndConfirm = () => {
-    push("/order-status/212322");
-  };
-
   const totalPrice = items.reduce(
     (total, item) => total + item.price * item.qty,
-    0,
+    0
   );
 
   const handleConfirmPayment = async () => {
     if (!file) {
-      alert("please upload your payment receipt!");
+      alert("Please upload your payment receipt!");
       return;
     }
+
     if (!customerInfo) {
-      alert("customer information is missing, please return to checkout");
+      alert("Customer information is missing, please return to checkout");
       push("/checkout");
       return;
     }
@@ -40,32 +37,34 @@ const PaymentSteps = () => {
       formData.append("customerName", customerInfo.customerName);
       formData.append(
         "customerContact",
-        customerInfo.customerContact!.toString(),
+        customerInfo.customerContact!.toString()
       );
       formData.append("customerAddress", customerInfo.customerAddress);
       formData.append("image", file);
       formData.append(
-        "pusrchasedItems",
+        "purchasedItems",
         JSON.stringify(
-          items.map((item) => ({ productId: item._id, qty: item.qty })),
-        ),
+          items.map((item) => ({ productId: item._id, qty: item.qty }))
+        )
       );
       formData.append("totalPayment", totalPrice!.toString());
 
       const res = await transactionCheckout(formData);
-      alert("Transaction created succesfully!");
+
+      alert("Transaction created successfully!");
       reset();
       push(`/order-status/${res._id}`);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <CardWithHeader title="Payment Steps">
       <div className="p-5">
         <ol className="list-decimal text-xs pl-2 flex flex-col gap-4 mb-5">
           <li>
-            Transfer the total amount of <b>Rp. 1.035.000 </b> to your preferred
+            Transfer the total amount of <b>Rp. 1.035.000</b> to your preferred
             bank account listed under 'Payment Options' (BCA, Mandiri, or BTPN).
           </li>
           <li>
@@ -84,18 +83,17 @@ const PaymentSteps = () => {
 
       <div className="border-t border-gray-200 p-4">
         <div className="flex justify-between font-semibold">
-          <div className="text-sm">Total :</div>
-          <div className="text-primary text-xs ml-auto self-center">
+          <div className="text-sm">Total</div>
+          <div className="text-primary text-xs">
             {priceFormatter(totalPrice)}
           </div>
         </div>
         <Button
           variant="dark"
-          className="w-full h-8 mt-4"
-          size="small"
+          className="w-full mt-4"
           onClick={handleConfirmPayment}
         >
-          <FiCheckCircle size={24} />
+          <FiCheckCircle />
           Upload Receipt & Confirm
         </Button>
       </div>

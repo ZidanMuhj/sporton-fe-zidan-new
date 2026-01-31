@@ -1,63 +1,40 @@
+import { Transaction } from "@/app/types";
 import priceFormatter from "@/app/utils/price-formatter";
 import { FiEdit2, FiEye, FiTrash2 } from "react-icons/fi";
 
 const transactionData = [
   {
-    date: "24/01/2026 15:07",
-    customer: "Gibran Dayat Racing",
-    contact: "+62123456789",
+    date: "23/02/2026 19:32",
+    customer: "John Doe",
+    contact: "+123123123 ",
     total: 1500000,
-    status: "Pending",
+    status: "pending",
   },
   {
-    date: "24/01/2026 15:07",
-    customer: "Galang 98Racing",
-    contact: "+62123847823",
+    date: "23/02/2026 19:32",
+    customer: "John Doe 2",
+    contact: "+123123123 ",
     total: 2500000,
-    status: "Rejected",
+    status: "rejected",
   },
   {
     date: "23/02/2026 19:32",
-    customer: "Opang Miaw",
-    contact: "+62283743345",
+    customer: "John Doe 3",
+    contact: "+123123123 ",
     total: 1000000,
-    status: "Paid",
-  },
-  {
-    date: "23/02/2026 19:32",
-    customer: "Fahreza Skibidi Situmorang",
-    contact: "+62283743345",
-    total: 1000000,
-    status: "Paid",
-  },
-  {
-    date: "23/02/2026 19:32",
-    customer: "Alif Syawal Liphonstore Nugraha",
-    contact: "+62283743345",
-    total: 1000000,
-    status: "Pending",
-  },
-  {
-    date: "23/02/2026 19:32",
-    customer: "Fakhrudin Fitbar",
-    contact: "+62283743345",
-    total: 1000000,
-    status: "Pending",
-  },
-  {
-    date: "23/02/2026 19:32",
-    customer: "Ibrahim Jetbus Syauqi",
-    contact: "+62283743345",
-    total: 1000000,
-    status: "Rejected",
+    status: "paid",
   },
 ];
 
 type TTransactionTableProps = {
-  onViewDetails: () => void;
+  onViewDetails: (transaction: Transaction) => void;
+  transactions: Transaction[];
 };
 
-const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
+const TransactionTable = ({
+  onViewDetails,
+  transactions,
+}: TTransactionTableProps) => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
@@ -83,22 +60,30 @@ const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {transactionData.map((data, index) => (
+          {transactions.map((data) => (
             <tr
-              key={index}
+              key={data._id}
               className="border-b border-gray-200 last:border-b-0"
             >
-              <td className="px-6 py-4 font-medium">{data.date}</td>
-              <td className="px-6 py-4 font-medium">{data.customer}</td>
-              <td className="px-6 py-4 font-medium">{data.contact}</td>
               <td className="px-6 py-4 font-medium">
-                {priceFormatter(data.total)}
+                {new Date(data.createdAt).toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </td>
+              <td className="px-6 py-4 font-medium">{data.customerName}</td>
+              <td className="px-6 py-4 font-medium">{data.customerContact}</td>
+              <td className="px-6 py-4 font-medium">
+                {priceFormatter(parseInt(data.totalPayment))}
               </td>
 
               <td className="px-6 py-4 font-medium">
                 <div
                   className={`px-4 py-1 rounded-full border text-center w-fit text-sm uppercase ${getStatusColor(
-                    data.status
+                    data.status,
                   )}`}
                 >
                   {data.status}
@@ -106,7 +91,7 @@ const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
               </td>
               <td className="px-6 py-7.5 flex items-center gap-3 text-gray-600">
                 <button
-                  onClick={onViewDetails}
+                  onClick={() => onViewDetails(data)}
                   className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 w-fit py-1 px-2 rounded-md"
                 >
                   <FiEye size={18} />

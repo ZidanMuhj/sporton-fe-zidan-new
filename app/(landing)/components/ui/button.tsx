@@ -1,10 +1,8 @@
-import React from "react";
-
 type TButtonProps = {
   children: React.ReactNode;
   className?: string;
   variant?: "primary" | "dark" | "ghost";
-  size?: "small" | "normal";
+  size?: "normal" | "small";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
@@ -24,8 +22,8 @@ const Button = ({
   };
 
   const sizes = {
-    small: "px-[10px] py-7",
-    normal: "px-9 py-4",
+    normal: "py-4 px-9",
+    small: "py-[10px] px-7",
   };
 
   return (

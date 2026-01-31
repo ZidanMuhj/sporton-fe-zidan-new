@@ -1,99 +1,55 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiSearch, FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
+import { FiSearch, FiShoppingBag } from "react-icons/fi";
 import CartPopup from "../ui/cart-popup";
-import Button from "../ui/button";
+import { useState } from "react";
 import { useCartStore } from "@/app/hooks/use-cart-store";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartPopupOpen, setIsCartPopupOpen] = useState(false);
   const { items } = useCartStore();
+  const [isCartPopupOpen, setIsCartPopupOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white sticky top-0 z-50 shadow-sm">
-      <div className="flex justify-between items-center container mx-auto py-4 px-5 md:py-7">
-        <div className="w-24 md:w-auto">
-          <Link href="/">
-            <Image
-              src="/images/logo.svg"
-              alt="Sport on"
-              width={127}
-              height={30}
-              className="w-full h-auto"
-            />
-          </Link>
-        </div>
-
-        <nav className="hidden md:flex md:gap-10 lg:gap-44 font-medium transition-all">
+    <header className="fixed w-full z-20 backdrop-blur-xl bg-white/50">
+      <div className="flex justify-between gap-10 container mx-auto py-7">
+        <Link href="/">
+          <Image
+            src="/images/logo.svg"
+            alt="sporton logo"
+            width={127}
+            height={30}
+          />
+        </Link>
+        <nav className="flex gap-24 font-medium">
           <Link
             href="#"
-            className="relative hover:text-primary transition-colors"
+            className="relative after:content-[''] after:block after:bg-primary after:rounded-full after:h-[3px] after:w-1/2 after:absolute after:left-1/2 after:-translate-x-1/2 after:translate-y-1"
           >
             Home
           </Link>
-          <Link href="#" className="hover:text-primary transition-colors">
-            Category
-          </Link>
-          <Link href="#" className="hover:text-primary transition-colors">
-            Explore Product
-          </Link>
+          <Link href="#">Category</Link>
+          <Link href="#">Explore Products</Link>
         </nav>
-
-        <div className=" relative flex gap-4 md:gap-10 items-center">
-          <FiSearch className="w-5 h-5 md:w-6 md:h-6 cursor-pointer" />
-
+        <div className="relative flex gap-10">
+          <FiSearch size={24} />
           <button
             className="relative cursor-pointer"
             onClick={() => setIsCartPopupOpen(!isCartPopupOpen)}
           >
-            <FiShoppingBag className="w-5 h-5 md:w-6 md:h-6  " />
+            <FiShoppingBag size={24} />
             {items.length ? (
-              <div className="bg-primary rounded-full w-3 h-3 md:w-4 md:h-4 absolute -top-1 -right-1 text-[8px] md:text-[10px] text-white flex items-center justify-center">
-              {items.length}
-            </div>
+              <div className="bg-primary rounded-full w-3.5 h-3.5 absolute -top-1 -right-1 text-[10px] text-white text-center">
+                {items.length}
+              </div>
             ) : (
               <></>
             )}
           </button>
           {isCartPopupOpen && <CartPopup />}
-          <button
-            className="md:hidden text-2xl focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <FiX /> : <FiMenu />}
-          </button>
         </div>
       </div>
-
-      {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-lg border-t md:hidden flex flex-col p-5 gap-4 animate-in slide-in-from-top-5 duration-300">
-          <Link
-            href="#"
-            className="font-medium hover:text-primary"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="#"
-            className="font-medium hover:text-primary"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Category
-          </Link>
-          <Link
-            href="#"
-            className="font-medium hover:text-primary"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Explore Product
-          </Link>
-        </div>
-      )}
     </header>
   );
 };

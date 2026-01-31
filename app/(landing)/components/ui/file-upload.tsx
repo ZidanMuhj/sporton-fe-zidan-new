@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { FiImage, FiTrash2, FiUploadCloud } from "react-icons/fi";
 
 type TFileUploadProps = {
-  onFileSelect?: (fie: File | null) => void;
+  onFileSelect?: (file: File | null) => void;
 };
 
 const FileUpload = ({ onFileSelect }: TFileUploadProps) => {
@@ -27,7 +27,8 @@ const FileUpload = ({ onFileSelect }: TFileUploadProps) => {
   return (
     <div
       onClick={() => fileInputRef.current?.click()}
-      onDragOver={(e) => {
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => {
         e.preventDefault();
         handleFileChange(e.dataTransfer.files?.[0]);
       }}
@@ -54,7 +55,7 @@ const FileUpload = ({ onFileSelect }: TFileUploadProps) => {
           </p>
           <button
             onClick={removeFile}
-            className="flex gap-2 bg-primary/90 text-white mx-auto rounded mt-4 px-2 text-semibold"
+            className="flex gap-2 bg-primary/90 text-white mx-auto rounded mt-4 px-2"
           >
             <FiTrash2 className="self-center" /> Remove
           </button>

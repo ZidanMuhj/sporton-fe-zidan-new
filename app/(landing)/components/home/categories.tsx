@@ -1,46 +1,42 @@
+import { getImageUrl } from "@/app/lib/api";
+import { Category } from "@/app/types";
+import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import Image from "next/image";
-import { Category } from "@/app/types";
-import { getImageUrl } from "@/app/lib/api";
-
-const categoryList = [
-  {
-    name: "Running",
-    imgUrl: "category-running.svg",
-  },
-];
 
 type TCategoriesProps = {
   categories: Category[];
 };
 
 const CategoriesSection = ({ categories }: TCategoriesProps) => {
+  console.log(categories);
+
   return (
     <section id="category-section" className="container mx-auto pb-20">
       <div className="flex justify-between">
         <h2 className="font-bold text-2xl">Browse By Categories</h2>
-        <Link href="#" className="text-primary flex gap-2 font-medium ">
+        <Link href="#" className="flex gap-2 text-primary font-medium">
           <span className="self-center">See All Categories</span>
           <FiArrowRight className="self-center" />
         </Link>
       </div>
-      <div className="grid grid-cols-6 gap-12">
+      <div className="grid grid-cols-6 gap-12 mt-8">
         {categories.map((category) => (
           <div
-            className="rounded-lg bg-gradient-to-r from-[#f1f1f1] to-[#f7f7f7] w-full aspect-square flex flex-col justify-center items-center gap-4 hover:scale-105 transition-transform duration-300 mt-5 md:mt-5"
+            className="rounded-lg bg-gradient-to-r from-[#F1F1F1] to-[#F7F7F7] w-full aspect-square flex justify-center"
             key={category._id}
           >
-            <Image
-              src={getImageUrl(category.imageUrl)}
-              width={86}
-              height={86}
-              alt={category.name}
-              className="object-contain"
-            />
-
-            <div className="text-primary md:font-medium font-medium  md:text-lg text-[10px] text-center capitalize">
-              {category.name}
+            <div className="self-center">
+              <Image
+                src={getImageUrl(category.imageUrl)}
+                width={86}
+                height="86"
+                alt={category.name}
+                className="mb-[10px]"
+              />
+              <div className="text-primary font-medium text-xl text-center">
+                {category.name}
+              </div>
             </div>
           </div>
         ))}

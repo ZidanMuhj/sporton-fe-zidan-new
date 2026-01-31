@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import CardWithHeader from "../ui/card-with-header";
 import { CustomerInfo } from "@/app/hooks/use-cart-store";
 
@@ -11,10 +11,11 @@ type TOrderInformation = {
 
 const OrderInformation = ({ formData, setFormData }: TOrderInformation) => {
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   return (
     <CardWithHeader title="Order Information">
       <div className="p-5">
@@ -22,7 +23,7 @@ const OrderInformation = ({ formData, setFormData }: TOrderInformation) => {
           <label htmlFor="customerName">Full Name</label>
           <input
             type="text"
-            placeholder="Type Your Full Name"
+            placeholder="Type your full name"
             id="customerName"
             name="customerName"
             value={formData.customerName}
@@ -33,21 +34,22 @@ const OrderInformation = ({ formData, setFormData }: TOrderInformation) => {
           <label htmlFor="customerContact">Whatsapp Number</label>
           <input
             type="number"
-            placeholder="0812xxxxx"
+            placeholder="Type your whatsapp number"
             id="customerContact"
             name="customerContact"
-            value={formData.customerContact}
+            value={formData.customerContact ?? ""}
             onChange={handleInputChange}
           />
         </div>
         <div className="input-group">
           <label htmlFor="customerAddress">Shipping Address</label>
           <textarea
-            placeholder="Jl Asem Baris V. Tebet. Jakarta Selatan"
+            placeholder="Type your shipping address"
+            id="customerAddress"
             name="customerAddress"
+            rows={7}
             value={formData.customerAddress}
             onChange={handleInputChange}
-            rows={7}
           />
         </div>
       </div>
